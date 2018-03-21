@@ -1,4 +1,7 @@
-image: "sonna/googletest:latest"
+image: debian:latest
+
+before_script:
+  - sudo apt-get install check
 
 stages:
   - build
