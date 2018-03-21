@@ -8,15 +8,15 @@ LDLIBS=-lm
 RM=rm -f
 
 TESTFLAGS=-I/usr/local/lib/include/
-TESTLIBS=-lgtest
+TESTLIBS=-lcheck
 
 TARGET=main
 TESTTARGET=test
 
-SRCS=src/hello_world.c
+SRCS=src/robot.c
 OBJS=$(subst .c,.o,$(SRCS))
-TESTSRCS=$(subst .c,_test.cpp,$(SRCS)) src/test_helpers.c
-TESTOBJS=$(subst .cpp,.o,$(TESTSRCS))
+TESTSRCS=$(subst .c,_test.cpp,$(SRCS)) src/test_helpers.c src/robot_test_helpers.c
+TESTOBJS=$(OBJS) $(subst .cpp,.o,$(TESTSRCS))
 
 .PHONY: default all clean
 
@@ -30,25 +30,25 @@ all: default
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 # compile only, C++ source
-%.o: %.cpp $(TEST)
+%.o: %.cpp
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 
-main: main.o $(OBJ)
-	$(CXX) -o bin/$@ $^ $(CXXFLAGS) $(LDLIBS)
+main: main.o $(OBJS)
+	$(CC) -o bin/$@ $^ $(CCFLAGS) $(LDLIBS)
 
 
 test: $(TESTOBJS)
-	$(CXX) $(CXXFLAGS) $(TESTFLAGS) -o bin/$@ $^ $(LDLIBS) $(TESTLIBS) && \
+	$(CC) $(CCFLAGS) $(TESTFLAGS) -o bin/$@ $^ $(LDLIBS) $(TESTLIBS) && \
 	./bin/$@
 
 clean:
 	$(RM) $(OBJS)
 
 distclean: clean
-	$(RM) bin/$(TARGET)
+	$(RM) main.o bin/$(TARGET)
 
 testclean: clean
-	$(RM) bin/$(TESTTARGET)
+	$(RM) $(OBJS) $(TESTOBJS) bin/$(TESTTARGET)
 
 # http://stackoverflow.com/questions/1484817/how-do-i-make-a-simple-makefile-gcc-unix

@@ -1,11 +1,10 @@
-#include "test_helpers.h"
+#include "robot_test_helpers.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-//#include <iostream>
 
-const char * capture_output(void (*block)()) {
+const char * capture_output_robot(void (*block)(Robot), Robot robot) {
   char *stdout_contents;
   long temp_out_size;
   int stdout_dupfd;
@@ -24,7 +23,7 @@ const char * capture_output(void (*block)()) {
 
   /* output something... */
   // printf("Hello World\n");
-  (*block)();
+  (*block)(robot);
 
   /* flush output so it goes to our file */
   fflush(stdout);

@@ -7,9 +7,7 @@
     #include <sys/io.h>
 #endif
 
-#include <string>
-
-#include "gtest/gtest.h"
+#include <string.h>
 
 const char * capture_output(void (*block)());
 
