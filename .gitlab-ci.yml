@@ -1,7 +1,7 @@
 image: debian:latest
 
 before_script:
-  - sudo apt-get install check
+  - apt-get install -y check
 
 stages:
   - build
