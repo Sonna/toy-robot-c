@@ -15,8 +15,8 @@ TESTTARGET=test
 
 SRCS=src/robot.c
 OBJS=$(subst .c,.o,$(SRCS))
-TESTSRCS=$(subst .c,_test.cpp,$(SRCS)) src/test_helpers.c src/robot_test_helpers.c
-TESTOBJS=$(OBJS) $(subst .cpp,.o,$(TESTSRCS))
+TESTSRCS=$(subst .c,_test.c,$(SRCS)) src/test_helpers.c src/robot_test_helpers.c
+TESTOBJS=$(OBJS) $(subst .c,.o,$(TESTSRCS))
 
 .PHONY: default all clean
 

@@ -1,8 +1,15 @@
 image: buildpack-deps:latest
 
 before_script:
-  - apt-get update -y
-  - apt-get install -y check
+  - mkdir /tmp/check
+  - cd /tmp/check
+  - curl -L https://github.com/libcheck/check/releases/download/0.12.0/check-0.12.0.tar.gz | tar xvz
+  - cd check-0.12.0
+  - ./configure
+  - make
+  - make check
+  - make install
+  - ldconfig # Refresh linker sources
 
 stages:
   - build

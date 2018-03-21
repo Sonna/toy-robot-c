@@ -11,8 +11,8 @@ START_TEST(robot_test_robot_report) {
 
   const char* stdout_contents = capture_output_robot(robot_report, subject);
   const char* expected_output = "0,0,NORTH\n";
-  //ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
-  ck_assert_str_eq(stdout_contents, expected_output);
+  ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
+  //ck_assert_str_eq(stdout_contents, expected_output);
 }
 END_TEST
 
