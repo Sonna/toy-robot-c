@@ -1,4 +1,4 @@
-image: debian:latest
+image: buildpack-deps:latest
 
 before_script:
   - apt-get update -y
