@@ -18,6 +18,11 @@ OBJS=$(subst .c,.o,$(SRCS))
 TESTSRCS=$(subst .c,_test.c,$(SRCS)) src/test_helpers.c src/robot_test_helpers.c
 TESTOBJS=$(OBJS) $(subst .c,.o,$(TESTSRCS))
 
+LOCALLIBSRCS=lib/hash_table_simple.c
+LOCALLIBOBJS=$(subst .c,.o,$(LOCALLIBSRCS))
+TESTLOCALLIBSRCS=$(subst .c,_test.c,$(LOCALLIBSRCS))
+TESTLOCALLIBOBJS=$(LOCALLIBOBJS) $(subst .c,.o,$(TESTLOCALLIBSRCS))
+
 .PHONY: default all clean
 
 default: $(TARGET)
@@ -34,21 +39,21 @@ all: default
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 
-main: main.o $(OBJS)
+main: main.o $(OBJS) $(LOCALLIBOBJS)
 	$(CC) -o bin/$@ $^ $(CCFLAGS) $(LDLIBS)
 
 
-test: $(TESTOBJS)
+test: test.o $(TESTOBJS) $(TESTLOCALLIBOBJS)
 	$(CC) $(CCFLAGS) $(TESTFLAGS) -o bin/$@ $^ $(LDLIBS) $(TESTLIBS) && \
 	./bin/$@
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(LOCALLIBOBJS)
 
 distclean: clean
 	$(RM) main.o bin/$(TARGET)
 
 testclean: clean
-	$(RM) $(OBJS) $(TESTOBJS) bin/$(TESTTARGET)
+	$(RM) $(OBJS) $(TESTOBJS) $(TESTLOCALLIBOBJS) bin/$(TESTTARGET)
 
 # http://stackoverflow.com/questions/1484817/how-do-i-make-a-simple-makefile-gcc-unix

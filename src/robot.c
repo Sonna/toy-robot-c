@@ -15,8 +15,12 @@ Robot robot_new(const int x, const int y, const char* facing) {
 // Robot robot_report(const Robot robot) {
 void robot_report(const Robot robot) {
   printf("%d,%d,%s\n", robot.x, robot.y, robot.facing);
-  //return robot;
 }
+
+void robot_left(Robot robot) {
+  //robot.y = TURN[robot.facing]["LEFT"];
+}
+
 
 void toy_robot_process(FILE* input) {
   char buff[255];
@@ -30,8 +34,6 @@ void toy_robot_process(FILE* input) {
 }
 
 int toy_robot_run(char** argv) {
-  //printf("Hello World\n");
-
   if (argv[1]) {
     FILE *input;
     input = fopen(argv[1], "r");
