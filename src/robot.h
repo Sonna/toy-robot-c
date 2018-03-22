@@ -13,7 +13,8 @@ typedef struct Robot {
 // Robot robot_new(int x, int y, char* facing);
 Robot robot_new(const int x, const int y, const char* facing);
 void robot_report(const Robot robot);
-
+void robot_left(Robot robot);
+void robot_right(Robot robot);
 
 void toy_robot_process(FILE* input);
 int toy_robot_run(char** argv);
