@@ -113,6 +113,138 @@ START_TEST(robot_test_robot_right_from_WEST) {
 }
 END_TEST
 
+START_TEST(robot_test_robot_move) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 1);
+  ck_assert_str_eq(subject.facing, "NORTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_EAST) {
+  Robot subject = robot_new(0, 0, "EAST");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 1);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "EAST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_WEST) {
+  Robot subject = robot_new(2, 2, "WEST");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 1);
+  ck_assert_int_eq(subject.y, 2);
+  ck_assert_str_eq(subject.facing, "WEST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_SOUTH) {
+  Robot subject = robot_new(2, 2, "SOUTH");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 2);
+  ck_assert_int_eq(subject.y, 1);
+  ck_assert_str_eq(subject.facing, "SOUTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_00SOUTH) {
+  Robot subject = robot_new(0, 0, "SOUTH");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "SOUTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_00WEST) {
+  Robot subject = robot_new(0, 0, "WEST");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "WEST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_04WEST) {
+  Robot subject = robot_new(0, 4, "WEST");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 4);
+  ck_assert_str_eq(subject.facing, "WEST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_04NORTH) {
+  Robot subject = robot_new(0, 4, "NORTH");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 4);
+  ck_assert_str_eq(subject.facing, "NORTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_44NORTH) {
+  Robot subject = robot_new(4, 4, "NORTH");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 4);
+  ck_assert_int_eq(subject.y, 4);
+  ck_assert_str_eq(subject.facing, "NORTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_44EAST) {
+  Robot subject = robot_new(4, 4, "EAST");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 4);
+  ck_assert_int_eq(subject.y, 4);
+  ck_assert_str_eq(subject.facing, "EAST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_40EAST) {
+  Robot subject = robot_new(4, 0, "EAST");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 4);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "EAST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_move_does_not_fall_off_table_at_40SOUTH) {
+  Robot subject = robot_new(4, 0, "SOUTH");
+
+  robot_move(&subject);
+
+  ck_assert_int_eq(subject.x, 4);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "SOUTH");
+}
+END_TEST
+
 Suite * robot_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -132,6 +264,19 @@ Suite * robot_suite(void) {
   tcase_add_test(tc_core, robot_test_robot_right_from_EAST);
   tcase_add_test(tc_core, robot_test_robot_right_from_SOUTH);
   tcase_add_test(tc_core, robot_test_robot_right_from_WEST);
+  tcase_add_test(tc_core, robot_test_robot_move);
+  tcase_add_test(tc_core, robot_test_robot_move_WEST);
+  tcase_add_test(tc_core, robot_test_robot_move_EAST);
+  tcase_add_test(tc_core, robot_test_robot_move_SOUTH);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_00SOUTH);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_00WEST);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_04WEST);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_04NORTH);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_44NORTH);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_44EAST);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_40EAST);
+  tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_40SOUTH);
+
   suite_add_tcase(s, tc_core);
 
   return s;
