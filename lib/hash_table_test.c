@@ -56,6 +56,23 @@ START_TEST(hash_table_test_hash_delete) {
 }
 END_TEST
 
+START_TEST(hash_table_test_hash_update_on_insert) {
+  ht_hash_table* subject = ht_new();
+
+  ht_insert(subject, "blue", "whale");
+
+  ck_assert_str_eq(ht_search(subject, "blue"), "whale");
+  ck_assert_int_eq(subject->count, 1);
+
+  ht_insert(subject, "blue", "horse");
+
+  ck_assert_str_eq(ht_search(subject, "blue"), "horse");
+  ck_assert_int_eq(subject->count, 1);
+
+  ht_del_hash_table(subject);
+}
+END_TEST
+
 Suite * hash_table_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -69,6 +86,7 @@ Suite * hash_table_suite(void) {
   tcase_add_test(tc_core, hash_table_test_hash_insert);
   tcase_add_test(tc_core, hash_table_test_hash_search);
   tcase_add_test(tc_core, hash_table_test_hash_delete);
+  tcase_add_test(tc_core, hash_table_test_hash_update_on_insert);
   suite_add_tcase(s, tc_core);
 
   return s;
