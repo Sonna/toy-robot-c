@@ -3,7 +3,7 @@
 
 #include "src/robot_test.h"
 #include "lib/hash_table_simple_test.h"
-#include "lib/hash_table_test.h"
+#include "lib/hash_table_f2a_test.h"
 
 int main(void)
 {
@@ -12,7 +12,7 @@ int main(void)
 
   sr = srunner_create(robot_suite());
   srunner_add_suite(sr, hash_table_simple_suite());
-  srunner_add_suite(sr, hash_table_suite());
+  srunner_add_suite(sr, hash_table_f2a_suite());
 
   //srunner_run_all(sr, CK_NORMAL);
   srunner_run_all(sr, CK_VERBOSE);

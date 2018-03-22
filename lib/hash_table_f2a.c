@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "hash_table.h"
+#include "hash_table_f2a.h"
 
 // hash function useful when KeyType is char * (string)
 unsigned strhashkey(const char * key, int max) {

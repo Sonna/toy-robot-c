@@ -18,7 +18,7 @@ OBJS=$(subst .c,.o,$(SRCS))
 TESTSRCS=$(subst .c,_test.c,$(SRCS)) src/test_helpers.c src/robot_test_helpers.c
 TESTOBJS=$(OBJS) $(subst .c,.o,$(TESTSRCS))
 
-LOCALLIBSRCS=lib/hash_table_simple.c lib/hash_table.c
+LOCALLIBSRCS=lib/hash_table_simple.c lib/hash_table_f2a.c
 LOCALLIBOBJS=$(subst .c,.o,$(LOCALLIBSRCS))
 TESTLOCALLIBSRCS=$(subst .c,_test.c,$(LOCALLIBSRCS))
 TESTLOCALLIBOBJS=$(LOCALLIBOBJS) $(subst .c,.o,$(TESTLOCALLIBSRCS))

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "hash_table_test.h"
+#include "hash_table_f2a_test.h"
 
 START_TEST(hash_table_test_hash_new_from_two_arrays) {
   static const char * keyList[] = {"red", "orange", "yellow", "green", "blue", "violet"};
@@ -29,11 +29,11 @@ START_TEST(hash_table_test_hash_new_from_two_arrays) {
 }
 END_TEST
 
-Suite * hash_table_suite(void) {
+Suite * hash_table_f2a_suite(void) {
   Suite *s;
   TCase *tc_core;
 
-  s = suite_create("Hash Table");
+  s = suite_create("Hash Table F2A");
 
   /* Core test case */
   tc_core = tcase_create("Core");

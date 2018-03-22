@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef HASH_TABLE_H
-#define HASH_TABLE_H
+#ifndef HASH_TABLE_F2A_H
+#define HASH_TABLE_F2A_H
 
 #define KeyType const char *
 #define ValType int
