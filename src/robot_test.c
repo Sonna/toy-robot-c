@@ -25,8 +25,95 @@ START_TEST(robot_test_robot_new) {
 }
 END_TEST
 
-Suite * robot_suite(void)
-{
+START_TEST(robot_test_robot_left) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_left(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "WEST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_left_from_WEST) {
+  Robot subject = robot_new(0, 0, "WEST");
+
+  robot_left(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "SOUTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_left_from_SOUTH) {
+  Robot subject = robot_new(0, 0, "SOUTH");
+
+  robot_left(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "EAST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_left_from_EAST) {
+  Robot subject = robot_new(0, 0, "EAST");
+
+  robot_left(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "NORTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_right) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_right(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "EAST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_right_from_EAST) {
+  Robot subject = robot_new(0, 0, "EAST");
+
+  robot_right(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "SOUTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_right_from_SOUTH) {
+  Robot subject = robot_new(0, 0, "SOUTH");
+
+  robot_right(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "WEST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_right_from_WEST) {
+  Robot subject = robot_new(0, 0, "WEST");
+
+  robot_right(subject);
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "NORTH");
+}
+END_TEST
+
+Suite * robot_suite(void) {
   Suite *s;
   TCase *tc_core;
 
@@ -37,23 +124,15 @@ Suite * robot_suite(void)
 
   tcase_add_test(tc_core, robot_test_robot_new);
   tcase_add_test(tc_core, robot_test_robot_report);
+  tcase_add_test(tc_core, robot_test_robot_left);
+  tcase_add_test(tc_core, robot_test_robot_left_from_WEST);
+  tcase_add_test(tc_core, robot_test_robot_left_from_SOUTH);
+  tcase_add_test(tc_core, robot_test_robot_left_from_EAST);
+  tcase_add_test(tc_core, robot_test_robot_right);
+  tcase_add_test(tc_core, robot_test_robot_right_from_EAST);
+  tcase_add_test(tc_core, robot_test_robot_right_from_SOUTH);
+  tcase_add_test(tc_core, robot_test_robot_right_from_WEST);
   suite_add_tcase(s, tc_core);
 
   return s;
-}
-
-int main(void)
-{
-  int number_failed;
-  Suite *s;
-  SRunner *sr;
-
-  s = robot_suite();
-  sr = srunner_create(s);
-
-  //srunner_run_all(sr, CK_NORMAL);
-  srunner_run_all(sr, CK_VERBOSE);
-  number_failed = srunner_ntests_failed(sr);
-  srunner_free(sr);
-  return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
