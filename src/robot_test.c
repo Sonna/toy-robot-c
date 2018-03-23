@@ -267,6 +267,61 @@ START_TEST(robot_test_robot_place_at_13EAST) {
 }
 END_TEST
 
+START_TEST(robot_test_robot_exec_REPORT) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  //robot_exec(&subject, "REPORT");
+
+  const char* stdout_contents = capture_output_robot_exec(robot_exec, &subject, "REPORT", "");
+  const char* expected_output = "0,0,NORTH\n";
+  ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
+}
+END_TEST
+
+START_TEST(robot_test_robot_exec_PLACE) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_exec(&subject, "PLACE", "3,3,WEST");
+
+  ck_assert_int_eq(subject.x, 3);
+  ck_assert_int_eq(subject.y, 3);
+  ck_assert_str_eq(subject.facing, "WEST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_exec_MOVE) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_exec(&subject, "MOVE", "");
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 1);
+  ck_assert_str_eq(subject.facing, "NORTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_exec_LEFT) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_exec(&subject, "LEFT", "");
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "WEST");
+}
+END_TEST
+
+START_TEST(robot_test_robot_exec_RIGHT) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_exec(&subject, "RIGHT", "");
+
+  ck_assert_int_eq(subject.x, 0);
+  ck_assert_int_eq(subject.y, 0);
+  ck_assert_str_eq(subject.facing, "EAST");
+}
+END_TEST
+
 Suite * robot_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -300,6 +355,11 @@ Suite * robot_suite(void) {
   tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_40SOUTH);
   tcase_add_test(tc_core, robot_test_robot_place);
   tcase_add_test(tc_core, robot_test_robot_place_at_13EAST);
+  tcase_add_test(tc_core, robot_test_robot_exec_REPORT);
+  tcase_add_test(tc_core, robot_test_robot_exec_PLACE);
+  tcase_add_test(tc_core, robot_test_robot_exec_MOVE);
+  tcase_add_test(tc_core, robot_test_robot_exec_LEFT);
+  tcase_add_test(tc_core, robot_test_robot_exec_RIGHT);
 
   suite_add_tcase(s, tc_core);
 

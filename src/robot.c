@@ -105,6 +105,42 @@ void robot_place(Robot* robot, char* raw_coordinates) {
   strncpy(robot->facing, raw_coordinates + 4, 5);
 }
 
+void robot_exec(Robot* robot, char* raw_command, char* raw_args) {
+  ht_hash_table* known_commands = ht_new();
+
+  ht_insert(known_commands, "PLACE", "0");
+  ht_insert(known_commands, "MOVE", "1");
+  ht_insert(known_commands, "LEFT", "2");
+  ht_insert(known_commands, "RIGHT", "3");
+  ht_insert(known_commands, "REPORT", "4");
+
+  int switch_num = atoi(ht_search(known_commands, raw_command));
+
+  switch(switch_num) {
+    case 0:
+      robot_place(robot, raw_args);
+      break;
+    case 1:
+      robot_move(robot);
+      break;
+    case 2:
+      robot_left(*robot);
+      break;
+    case 3:
+      robot_right(*robot);
+      break;
+    case 4:
+      robot_report(*robot);
+      break;
+    default:
+      // Do Nothing
+      break;
+   }
+
+   ht_del_hash_table(known_commands);
+   return;
+}
+
 void toy_robot_process(FILE* input) {
   char buff[255];
   Robot robot = robot_new(0, 0, "NORTH");

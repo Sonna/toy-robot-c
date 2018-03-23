@@ -17,6 +17,7 @@ void robot_left(Robot robot);
 void robot_right(Robot robot);
 void robot_move(Robot* robot);
 void robot_place(Robot* robot, char* raw_coordinates);
+void robot_exec(Robot* robot, char* raw_command, char* raw_args);
 
 void toy_robot_process(FILE* input);
 int toy_robot_run(char** argv);
