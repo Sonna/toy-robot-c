@@ -322,6 +322,17 @@ START_TEST(robot_test_robot_exec_RIGHT) {
 }
 END_TEST
 
+START_TEST(robot_test_robot_exec_UNKNOWN) {
+  Robot* subject = robot_new(0, 0, "NORTH");
+
+  robot_exec(subject, "UNKNOWN", "");
+
+  ck_assert_int_eq(subject->x, 0);
+  ck_assert_int_eq(subject->y, 0);
+  ck_assert_str_eq(subject->facing, "NORTH");
+}
+END_TEST
+
 Suite * robot_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -360,6 +371,7 @@ Suite * robot_suite(void) {
   tcase_add_test(tc_core, robot_test_robot_exec_MOVE);
   tcase_add_test(tc_core, robot_test_robot_exec_LEFT);
   tcase_add_test(tc_core, robot_test_robot_exec_RIGHT);
+  tcase_add_test(tc_core, robot_test_robot_exec_UNKNOWN);
 
   suite_add_tcase(s, tc_core);
 
