@@ -1,10 +1,13 @@
 #include <check.h>
+// #include <stdio.h>
 #include <stdlib.h>
 
 #include "test_helpers.h"
 #include "robot_test_helpers.h"
 
 #include "robot.h"
+
+#include "../lib/fmemopen.h"
 
 START_TEST(robot_test_robot_report) {
   Robot* subject = robot_new(0, 0, "NORTH");
@@ -333,9 +336,66 @@ START_TEST(robot_test_robot_exec_UNKNOWN) {
 }
 END_TEST
 
+START_TEST(toy_robot_test_run_with_example_a) {
+  char* subject[] = {"bin/main", "examples/example_a.txt"};
+
+  const char* stdout_contents = capture_output_toy_robot_run(toy_robot_run, subject);
+  const char* expected_output = "0,0,NORTH\n";
+  ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
+}
+END_TEST
+
+START_TEST(toy_robot_test_run_with_example_b) {
+  char* subject[] = {"bin/main", "examples/example_b.txt"};
+
+  const char* stdout_contents = capture_output_toy_robot_run(toy_robot_run, subject);
+  const char* expected_output = "0,0,WEST\n";
+  ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
+}
+END_TEST
+
+START_TEST(toy_robot_test_run_with_example_c) {
+  char* subject[] = {"bin/main", "examples/example_c.txt"};
+
+  const char* stdout_contents = capture_output_toy_robot_run(toy_robot_run, subject);
+  const char* expected_output = "3,3,NORTH\n";
+  ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
+}
+END_TEST
+
+START_TEST(toy_robot_test_process) {
+  char* buffer = "REPORT\nEXIT\n";
+  FILE* stream;
+  stream = fmemopen(buffer, strlen(buffer), "r");
+
+  if (stream) {
+    const char* stdout_contents = capture_output_toy_robot_process(toy_robot_process, stream);
+    const char* expected_output = "0,0,NORTH\n";
+    ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
+  }
+  fclose(stream);
+}
+END_TEST
+
+START_TEST(toy_robot_test_process_complex) {
+  char* buffer =
+    "RIGHT\nMOVE\nREPORT\nMOVE\nLEFT\nREPORT\nPLACE 4,2,WEST\nREPORT\nEXIT\n";
+  FILE* stream;
+  stream = fmemopen(buffer, strlen(buffer), "r");
+
+  if (stream) {
+    const char* stdout_contents = capture_output_toy_robot_process(toy_robot_process, stream);
+    const char* expected_output = "1,0,EAST\n2,0,NORTH\n4,2,WEST\n";
+    ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
+  }
+  fclose(stream);
+}
+END_TEST
+
 Suite * robot_suite(void) {
   Suite *s;
   TCase *tc_core;
+  TCase *tc_toy_robot;
 
   s = suite_create("Robot");
 
@@ -374,6 +434,16 @@ Suite * robot_suite(void) {
   tcase_add_test(tc_core, robot_test_robot_exec_UNKNOWN);
 
   suite_add_tcase(s, tc_core);
+
+  tc_toy_robot = tcase_create("Toy Robot");
+
+  tcase_add_test(tc_toy_robot, toy_robot_test_run_with_example_a);
+  tcase_add_test(tc_toy_robot, toy_robot_test_run_with_example_b);
+  tcase_add_test(tc_toy_robot, toy_robot_test_run_with_example_c);
+  tcase_add_test(tc_toy_robot, toy_robot_test_process);
+  tcase_add_test(tc_toy_robot, toy_robot_test_process_complex);
+
+  suite_add_tcase(s, tc_toy_robot);
 
   return s;
 }

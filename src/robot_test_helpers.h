@@ -9,5 +9,7 @@ const char * capture_output_robot_exec(
     void (*block)(Robot*, char*, char*),
     Robot* robot, char* raw_command, char* raw_args
 );
+const char * capture_output_toy_robot_run(int (*block)(char**), char** argv);
+const char * capture_output_toy_robot_process(void (*block)(FILE*), FILE* input);
 
 #endif

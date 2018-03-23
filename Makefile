@@ -20,7 +20,7 @@ TESTOBJS=$(OBJS) $(subst .c,.o,$(TESTSRCS))
 
 LOCALLIBSRCS=lib/hash_table_simple.c lib/hash_table_f2a.c lib/hash_table.c lib/prime.c
 LOCALLIBOBJS=$(subst .c,.o,$(LOCALLIBSRCS))
-TESTLOCALLIBSRCS=$(subst .c,_test.c,$(LOCALLIBSRCS))
+TESTLOCALLIBSRCS=$(subst .c,_test.c,$(LOCALLIBSRCS)) lib/fmemopen-funopen.c
 TESTLOCALLIBOBJS=$(LOCALLIBOBJS) $(subst .c,.o,$(TESTLOCALLIBSRCS))
 
 .PHONY: default all clean
