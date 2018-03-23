@@ -16,5 +16,4 @@ build:
 test:
   stage: test
   script:
-  - make testclean
   - make test
