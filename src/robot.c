@@ -2,77 +2,6 @@
 
 #include "robot.h"
 
-
-// //#include <assert.h>
-// char** strsplit(char* sentence, const char delimiter)
-// {
-//   printf("strsplit\n");
-//     char** result;//    = 0;
-//     //size_t count     = 0;
-//     //char* last_comma = 0;
-//     //char delim[2];
-//     //delim[0] = a_delim;
-//     //delim[1] = 0;
-
-
-//     // Count how many elements will be extracted.
-//     size_t count = 0;
-//     char* tmp = sentence;
-//     while (*tmp)
-//     {
-//         if (delimiter == *tmp)
-//         {
-//             count++;
-//             //last_comma = tmp;
-//         }
-//         tmp++;
-//     }
-
-//     // /* Add space for trailing token. */
-//     // count += last_comma < (a_str + strlen(a_str) - 1);
-
-//     // /* Add space for terminating null string so caller
-//     //    knows where the list of returned strings ends. */
-//     // count++;
-
-//     result = malloc(sizeof(char*) * (count + 1));
-
-//     int length = strlen(sentence);
-//     int num = 0; // number of words
-//     int n = 0; // number of characters, since last word
-
-//     if (result) {
-//       for (int i = 0; i < length; i++) {
-//         printf("%c", sentence[i]);
-
-//         if(sentence[i] == delimiter) {
-//           printf("%s", sentence[i-n]);
-//           strncpy(result[num], sentence[i-n], n);
-//           num++;
-//           n = 0;
-//         }
-//         n++;
-//       }
-//     printf("\n");
-
-//     // {
-//     //     size_t idx  = 0;
-//     //     char* token = strtok(a_str, delim);
-
-//     //     while (token)
-//     //     {
-//     //         assert(idx < count);
-//     //         *(result + idx++) = strdup(token);
-//     //         token = strtok(0, delim);
-//     //     }
-//     //     assert(idx == count - 1);
-//     //     *(result + idx) = 0;
-//     }
-
-//     return result;
-// }
-
-
 char* turn_left(char* facing) {
   ht_hash_table* cardinal_counter_clockwise = ht_new();
 
@@ -171,7 +100,6 @@ void robot_move(Robot* robot) {
 }
 
 void robot_place(Robot* robot, char* raw_coordinates) {
-  // printf("robot_place: %s \n", raw_coordinates);
   robot->x = atoi(&raw_coordinates[0]);
   robot->y = atoi(&raw_coordinates[2]);
   strncpy(robot->facing, raw_coordinates + 4, 5);
@@ -195,7 +123,6 @@ void robot_exec(Robot* robot, char* raw_command, char* raw_args) {
 
     switch(switch_num) {
     case 0:
-      // printf("robot_exec: %s \n", raw_args);
       robot_place(robot, raw_args);
       break;
     case 1:
@@ -222,123 +149,30 @@ void robot_exec(Robot* robot, char* raw_command, char* raw_args) {
 
 void toy_robot_process(FILE* input) {
   char buff[255];
-  char* raw_command; // = "";
-  char* raw_args; // = "";
-  // char** commands;
-  // char* delimiter;
-  // int delimiter;
+  char* raw_command;
+  char* raw_args;
   Robot* robot = robot_new(0, 0, "NORTH");
 
-  // fscanf(input, "%s", buff);
   fgets(buff, 16, input);
-  //printf("%s\n", buff);
 
   while(!feof(input) && strncmp(buff, "EXIT", 4) != 0) {
-  // while(feof(input) != EOF) {
-  // while(fscanf(input, "%s", buff) == 1) {
-    // if (feof(input)) { break; }
-    // if (strncmp(raw_command, "EXIT", 4)) { break; }
-
-    // raw_command = strtok(buff," ");
-    // raw_args = strchr(buff, ' ');
-
-    // while (raw_command != NULL)
-    // if (raw_command != NULL)
-    // {
-    //   printf("%s\n", raw_command);
-    //   raw_args = strtok(NULL, " ");
-    //   printf("%s\n", raw_args);
-    // }
-      // printf("%s", raw_command);
-      // printf("%s\n", raw_args);
-
-    // if (strlen(buff) > 6) {
-    //   // strcpy(raw_args, buff+1+strlen(raw_command));
-    //   strncpy(raw_args, buff, 6);
-    // }
-    // raw_command = strtok(buff, " ");
-
-    // raw_args = strtok(NULL, " ");
-    // while (raw_command != NULL && raw_args != NULL)
-    // {
-    //   raw_args = strtok(NULL, NULL);
-    //   printf ("%s\n", raw_args);
-    // }
-    //raw_args = strtok(NULL, "\n");
-    //strncpy(raw_args, buff+1+strlen(raw_command), 9);
-    // robot_exec(robot, raw_command, raw_args);
-    // robot_exec(robot, raw_command, "3,3,SOUTH");
-    // robot_place(robot, "3,3,SOUTH");
-
-      // printf("toy_robot_process(BEFORE): %s \n", buff);
-    // commands = str_split(buff, ' ');
-    // strcpy(raw_command, commands[0]);
-    // if (commands[1] != NULL) {
-      // strcpy(raw_args, commands[1]);
-    // }
-    // raw_command = strtok(buff, " ");
-
-    // if(raw_command) {
-    //   printf("%s ", raw_command);
-      // printf("toy_robot_process(AFTER): %s \n", buff);
-      // printf("toy_robot_process(raw_command): %s \n", raw_command);
-      // // raw_args = strtok(NULL, " ");
-      // // strncpy(raw_args, buff+strlen(raw_command), strlen(buff)-strlen(raw_command));
-      // printf("toy_robot_process(raw_args): %s \n", raw_args);
-
-      // if(raw_args) {
-      //   printf("%s", raw_args);
-    // char* raw_string = strdup(buff);
-    // raw_command = strtok(raw_string, " ");
-    // raw_command = strtok(raw_string, " ");
-    // const char* delimiter = strchr(buff, ' ');
-    // if(delimiter) {
-    // char ** commands = strsplit(buff, ' ');
-    // if (commands != NULL) {
-    //   int i = 0;
-    //   while (commands[i]) {
-    //     printf("command [%d]: %s\n", i, commands[i]);
-    //     i++;
-    //   }
-    // }
     char* raw_input = strdup(buff);
     char* newline = strchr(raw_input, '\n');
     if (newline) { *newline = 0; }
 
-
-    // raw_command = strtok(buff, " ");
     raw_command = strtok(raw_input, " ");
-    // printf("delimiter = %s ", delimiter);
-    // printf("raw_string-delimiter = %ld ", raw_string-delimiter);
-    // printf("delimiter-raw_string = %ld ", delimiter-raw_string);
-      // strncpy(raw_command, raw_string, raw_string-delimiter);
-      // strncpy(raw_command, raw_string, delimiter-raw_string);
-    // }
-    if(raw_command) { //!= NULL) {
-      // raw_args = strstr(buff, " ");
-      // raw_args = strtok(buff, " ");
-      raw_args = strtok(NULL, " ");
-      // raw_args = strtok(NULL, " ");
 
-      if(raw_args) { //!= NULL) {
+    if(raw_command) {
+      raw_args = strtok(NULL, " ");
+
+      if(raw_args) {
         robot_exec(robot, raw_command, raw_args);
-        // printf("robot_exec(robot, \"%s\", \"%s\"); \n", raw_command, raw_args);
       } else {
         robot_exec(robot, raw_command, "");
-        // printf("robot_exec(robot, \"%s\", \"%s\"); \n", raw_command, "");
       }
     }
-    //   } else {
-    //     robot_exec(robot, raw_command, "");
-    //   }
-    //   printf("\n");
-    // }
-
-    // robot_exec(robot, raw_command, raw_args);
-
-    raw_command = NULL; //"";
-    raw_args = NULL; //"";
-    // fscanf(input, "%s", buff);
+    raw_command = NULL;
+    raw_args = NULL;
     fgets(buff, 16, input);
   }
 
