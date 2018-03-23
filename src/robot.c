@@ -72,16 +72,16 @@ Robot robot_new(const int x, const int y, const char* facing) {
 }
 
 // Robot robot_report(const Robot robot) {
-void robot_report(const Robot robot) {
-  printf("%d,%d,%s\n", robot.x, robot.y, robot.facing);
+void robot_report(const Robot* robot) {
+  printf("%d,%d,%s\n", robot->x, robot->y, robot->facing);
 }
 
-void robot_left(Robot robot) {
-  strncpy(robot.facing, turn_left(robot.facing), 5);
+void robot_left(Robot* robot) {
+  strncpy(robot->facing, turn_left(robot->facing), 5);
 }
 
-void robot_right(Robot robot) {
-  strncpy(robot.facing, turn_right(robot.facing), 5);
+void robot_right(Robot* robot) {
+  strncpy(robot->facing, turn_right(robot->facing), 5);
 }
 
 void robot_move(Robot* robot) {
@@ -124,13 +124,13 @@ void robot_exec(Robot* robot, char* raw_command, char* raw_args) {
       robot_move(robot);
       break;
     case 2:
-      robot_left(*robot);
+      robot_left(robot);
       break;
     case 3:
-      robot_right(*robot);
+      robot_right(robot);
       break;
     case 4:
-      robot_report(*robot);
+      robot_report(robot);
       break;
     default:
       // Do Nothing
@@ -148,7 +148,7 @@ void toy_robot_process(FILE* input) {
   fscanf(input, "%s", buff);
   printf("%s\n", buff );
 
-  robot_report(robot);
+  robot_report(&robot);
   return;
 }
 

@@ -12,9 +12,9 @@ typedef struct Robot {
 
 // Robot robot_new(int x, int y, char* facing);
 Robot robot_new(const int x, const int y, const char* facing);
-void robot_report(const Robot robot);
-void robot_left(Robot robot);
-void robot_right(Robot robot);
+void robot_report(const Robot* robot);
+void robot_left(Robot* robot);
+void robot_right(Robot* robot);
 void robot_move(Robot* robot);
 void robot_place(Robot* robot, char* raw_coordinates);
 void robot_exec(Robot* robot, char* raw_command, char* raw_args);

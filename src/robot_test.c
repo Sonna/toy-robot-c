@@ -9,7 +9,7 @@
 START_TEST(robot_test_robot_report) {
   Robot subject = robot_new(0, 0, "NORTH");
 
-  const char* stdout_contents = capture_output_robot(robot_report, subject);
+  const char* stdout_contents = capture_output_robot(robot_report, &subject);
   const char* expected_output = "0,0,NORTH\n";
   ck_assert_int_eq(0, strncmp(stdout_contents, expected_output, strlen(expected_output)));
   //ck_assert_str_eq(stdout_contents, expected_output);
@@ -28,7 +28,7 @@ END_TEST
 START_TEST(robot_test_robot_left) {
   Robot subject = robot_new(0, 0, "NORTH");
 
-  robot_left(subject);
+  robot_left(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
@@ -39,7 +39,7 @@ END_TEST
 START_TEST(robot_test_robot_left_from_WEST) {
   Robot subject = robot_new(0, 0, "WEST");
 
-  robot_left(subject);
+  robot_left(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
@@ -50,7 +50,7 @@ END_TEST
 START_TEST(robot_test_robot_left_from_SOUTH) {
   Robot subject = robot_new(0, 0, "SOUTH");
 
-  robot_left(subject);
+  robot_left(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
@@ -61,7 +61,7 @@ END_TEST
 START_TEST(robot_test_robot_left_from_EAST) {
   Robot subject = robot_new(0, 0, "EAST");
 
-  robot_left(subject);
+  robot_left(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
@@ -72,7 +72,7 @@ END_TEST
 START_TEST(robot_test_robot_right) {
   Robot subject = robot_new(0, 0, "NORTH");
 
-  robot_right(subject);
+  robot_right(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
@@ -83,7 +83,7 @@ END_TEST
 START_TEST(robot_test_robot_right_from_EAST) {
   Robot subject = robot_new(0, 0, "EAST");
 
-  robot_right(subject);
+  robot_right(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
@@ -94,7 +94,7 @@ END_TEST
 START_TEST(robot_test_robot_right_from_SOUTH) {
   Robot subject = robot_new(0, 0, "SOUTH");
 
-  robot_right(subject);
+  robot_right(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
@@ -105,7 +105,7 @@ END_TEST
 START_TEST(robot_test_robot_right_from_WEST) {
   Robot subject = robot_new(0, 0, "WEST");
 
-  robot_right(subject);
+  robot_right(&subject);
 
   ck_assert_int_eq(subject.x, 0);
   ck_assert_int_eq(subject.y, 0);
