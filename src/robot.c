@@ -99,6 +99,12 @@ void robot_move(Robot* robot) {
   }
 }
 
+void robot_place(Robot* robot, char* raw_coordinates) {
+  robot->x = atoi(&raw_coordinates[0]);
+  robot->y = atoi(&raw_coordinates[2]);
+  strncpy(robot->facing, raw_coordinates + 4, 5);
+}
+
 void toy_robot_process(FILE* input) {
   char buff[255];
   Robot robot = robot_new(0, 0, "NORTH");

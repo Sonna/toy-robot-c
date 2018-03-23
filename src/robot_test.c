@@ -245,6 +245,28 @@ START_TEST(robot_test_robot_move_does_not_fall_off_table_at_40SOUTH) {
 }
 END_TEST
 
+START_TEST(robot_test_robot_place) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_place(&subject, "4,2,SOUTH");
+
+  ck_assert_int_eq(subject.x, 4);
+  ck_assert_int_eq(subject.y, 2);
+  ck_assert_str_eq(subject.facing, "SOUTH");
+}
+END_TEST
+
+START_TEST(robot_test_robot_place_at_13EAST) {
+  Robot subject = robot_new(0, 0, "NORTH");
+
+  robot_place(&subject, "1,3,EAST");
+
+  ck_assert_int_eq(subject.x, 1);
+  ck_assert_int_eq(subject.y, 3);
+  ck_assert_str_eq(subject.facing, "EAST");
+}
+END_TEST
+
 Suite * robot_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -276,6 +298,8 @@ Suite * robot_suite(void) {
   tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_44EAST);
   tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_40EAST);
   tcase_add_test(tc_core, robot_test_robot_move_does_not_fall_off_table_at_40SOUTH);
+  tcase_add_test(tc_core, robot_test_robot_place);
+  tcase_add_test(tc_core, robot_test_robot_place_at_13EAST);
 
   suite_add_tcase(s, tc_core);
 
