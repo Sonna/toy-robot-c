@@ -1,7 +1,5 @@
 #include <string.h>
 
-#include "../lib/hash_table.h"
-
 #include "robot.h"
 
 char* turn_left(char* facing) {
@@ -61,14 +59,18 @@ int move_y(char* facing) {
 }
 
 
-Robot robot_new(const int x, const int y, const char* facing) {
-  Robot robot;
+Robot* robot_new(const int x, const int y, const char* facing) {
+  Robot* robot = malloc(sizeof(Robot));
 
-  robot.x = x;
-  robot.y = y;
-  robot.facing = strdup(facing);
+  robot->x = x;
+  robot->y = y;
+  robot->facing = strdup(facing);
 
   return robot;
+}
+
+void robot_destroy(Robot* robot) {
+  free(robot);
 }
 
 // Robot robot_report(const Robot robot) {
@@ -143,12 +145,14 @@ void robot_exec(Robot* robot, char* raw_command, char* raw_args) {
 
 void toy_robot_process(FILE* input) {
   char buff[255];
-  Robot robot = robot_new(0, 0, "NORTH");
+  Robot* robot = robot_new(0, 0, "NORTH");
 
   fscanf(input, "%s", buff);
   printf("%s\n", buff );
 
-  robot_report(&robot);
+  robot_report(robot);
+
+  robot_destroy(robot);
   return;
 }
 
