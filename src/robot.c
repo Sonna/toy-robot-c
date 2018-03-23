@@ -164,15 +164,9 @@ void toy_robot_process(FILE* input) {
 
     if(raw_command) {
       raw_args = strtok(NULL, " ");
-
-      if(raw_args) {
-        robot_exec(robot, raw_command, raw_args);
-      } else {
-        robot_exec(robot, raw_command, "");
-      }
+      robot_exec(robot, raw_command, raw_args);
     }
-    raw_command = NULL;
-    raw_args = NULL;
+
     fgets(buff, 16, input);
   }
 
