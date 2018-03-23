@@ -1,5 +1,4 @@
 #include <check.h>
-// #include <stdio.h>
 #include <stdlib.h>
 
 #include "test_helpers.h"
@@ -7,7 +6,11 @@
 
 #include "robot.h"
 
-#include "../lib/fmemopen.h"
+#ifdef __APPLE__
+  #include "../lib/fmemopen.h"
+#else
+  #include <stdio.h>
+#endif
 
 START_TEST(robot_test_robot_report) {
   Robot* subject = robot_new(0, 0, "NORTH");
