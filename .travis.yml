@@ -9,5 +9,5 @@ before_install:
 - docker pull sonna/check
 
 script:
-- docker run --rm sonna/check bash -c "make"
-- docker run --rm sonna/check bash -c "make test"
+- docker run --rm -v $(pwd):/app -w /app sonna/check bash -c "make distclean; make"
+- docker run --rm -v $(pwd):/app -w /app sonna/check bash -c "make testclean; make test"
