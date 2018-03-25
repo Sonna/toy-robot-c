@@ -7,7 +7,12 @@ services:
 
 before_install:
 - docker pull sonna/check
+- docker run -d --name app sonna/check
+- docker ps -a
 
 script:
-- make
-- make test
+- docker exec app bash -c "make"
+- docker exec app bash -c "make test"
+
+after_script:
+- docker rm -f app
