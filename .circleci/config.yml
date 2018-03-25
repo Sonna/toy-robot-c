@@ -4,13 +4,15 @@ jobs:
     docker:
     - image: sonna/check:latest
     steps:
-    - make
+    - checkout
+    - run: make
 
   test:
     docker:
     - image: sonna/check:latest
     steps:
-    - make test
+    - checkout
+    - run: make test
 
 workflows:
   version: 2
