@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: sonna/check:latest
+    steps:
+    - make
+
+  test:
+    docker:
+    - image: sonna/check:latest
+    steps:
+    - make test
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+    - build
+    - test
